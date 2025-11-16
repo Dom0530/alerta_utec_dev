@@ -1,0 +1,62 @@
+org: domenicrincon
+service: alerta-utec-crud
+
+provider:
+  name: aws
+  runtime: python3.12	
+  # Default memory size for functions (default: 1024MB)
+  memorySize: 1024
+  timeout: 30
+  iam:
+    role: arn:aws:iam::606646193182:role/LabRole	
+  environment:
+    TABLE_NAME: ${sls:stage}-Incidents
+
+functions:
+  asignar:
+    handler: assign_incident.lambda_handler
+    events:
+      - http:
+          path: /incidente/asignar
+          method: put
+          cors: true
+          integration: lambda
+  crear:
+    handler: create_incident.lambda_handler
+    events:
+      - http:
+          path: /incidente/crear
+          method: post
+          cors: true
+          integration: lambda
+  actualizar:
+    handler: update_incident_status.lambda_handler
+    events:
+      - http:
+          path: /incidente/actualizar
+          method: put
+          cors: true
+          integration: lambda
+  notificacion:
+    handler: enviar_notificacion.lambda_handler
+    events:
+      - http:
+          path: /notificacion/enviar
+          method: post
+          cors: true
+          integration: lambda
+
+resources:
+  Resources:
+    IncidentsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.TABLE_NAME}
+        AttributeDefinitions:
+          - AttributeName: incidentId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: incidentId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
+
