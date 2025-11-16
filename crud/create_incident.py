@@ -45,7 +45,7 @@ def lambda_handler(event, context):
         broadcast_function_name = os.environ.get('WS_BROADCAST_LAMBDA')
         lambda_client = boto3.client("lambda")
         lambda_client.invoke(
-            FunctionName="ws_broadcast_update",
+            FunctionName=broadcast_function_name,
             InvocationType="Event",  # asincrónico
             Payload=json.dumps({
                 "data": {
@@ -83,4 +83,5 @@ def lambda_handler(event, context):
             })
 
         }
+
 
