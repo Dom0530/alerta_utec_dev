@@ -1,5 +1,5 @@
 org: domenicrincon
-service: alerta-utec
+service: alerta-utec-crud
 
 provider:
   name: aws
