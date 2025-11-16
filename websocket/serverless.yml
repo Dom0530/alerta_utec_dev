@@ -1,5 +1,5 @@
 org: domenicrincon
-service: alerta-utec-websocket
+service: alerta-utec
 
 provider:
   name: aws
@@ -50,4 +50,5 @@ resources:
           - AttributeName: connectionId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+
 
