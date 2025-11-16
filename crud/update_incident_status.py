@@ -1,5 +1,6 @@
 import json
 import boto3
+import os
 from datetime import datetime
 
 # Cliente de DynamoDB
@@ -113,3 +114,4 @@ def lambda_handler(event, context):
             })
 
         }
+
