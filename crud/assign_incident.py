@@ -23,7 +23,7 @@ def lambda_handler(event, context):
             body = event  # fallback
 
         incident_id = body.get('incidentId')
-        assigned_to = body.get('status')
+        assigned_to = body.get('assignedTo')
 
         if not incident_id or not assigned_to:
             return {
@@ -104,5 +104,6 @@ def lambda_handler(event, context):
             })
 
         }
+
 
 
