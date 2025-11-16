@@ -11,7 +11,7 @@ provider:
     role: arn:aws:iam::758228479217:role/LabRole	
   environment:
     TABLE_NAME: ${sls:stage}-Incidents
-    WS_BROADCAST_LAMBDA: ${self:service}-${sls:stage}-wsBroadcastUpdate
+    WS_BROADCAST_LAMBDA: alerta-utec-websocket-${sls:stage}-wsBroadcastUpdate
 
 functions:
   asignar:
