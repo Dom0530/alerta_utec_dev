@@ -42,6 +42,7 @@ def lambda_handler(event, context):
         table.put_item(Item=incident)
 
         # Mandar a websocket
+        broadcast_function_name = os.environ.get('WS_BROADCAST_LAMBDA')
         lambda_client = boto3.client("lambda")
         lambda_client.invoke(
             FunctionName="ws_broadcast_update",
@@ -82,3 +83,4 @@ def lambda_handler(event, context):
             })
 
         }
+
