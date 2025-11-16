@@ -12,10 +12,18 @@ table = dynamodb.Table(table_name)
 def lambda_handler(event, context):
     try:
         # Parsear el body del request
-        body = json.loads(event['body']) if isinstance(event.get('body'), str) else event
+        # body siempre será un dict después de esto
+        body = {}
+        if 'body' in event:
+            if isinstance(event['body'], str):
+                body = json.loads(event['body'])
+            elif isinstance(event['body'], dict):
+                body = event['body']
+        else:
+            body = event  # fallback
 
-        incident_id = body.get('incidentId')
-        assigned_to = body.get('assignedTo')
+    incident_id = body.get('incidentId')
+    new_status = body.get('status')
 
         if not incident_id or not assigned_to:
             return {
@@ -96,3 +104,4 @@ def lambda_handler(event, context):
             })
 
         }
+
