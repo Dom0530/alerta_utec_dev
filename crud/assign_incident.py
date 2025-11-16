@@ -1,10 +1,12 @@
 import json
 import boto3
+import os
 from datetime import datetime
 
 # Cliente de DynamoDB
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('Incidents')
+table_name = os.environ.get('TABLE_NAME')
+table = dynamodb.Table(table_name)
 
 
 def lambda_handler(event, context):
@@ -92,4 +94,5 @@ def lambda_handler(event, context):
                 'message': 'Error al asignar incidente',
                 'error': str(e)
             })
+
         }
