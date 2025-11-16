@@ -1,7 +1,8 @@
-import boto3, json, datetime
+import boto3, json, datetime, os
 
 ddb = boto3.resource('dynamodb')
-table = ddb.Table('WebSocketConnections')
+table_name = os.environ.get('TABLE_NAME')
+table = ddb.Table(table_name)
 
 def ws_connect(event, context):
     connection_id = event['requestContext']['connectionId']
@@ -54,3 +55,4 @@ def ws_broadcast_update(event, context):
             print(f"Error enviando a {conn['connectionId']}: {e}")
 
     return { 'statusCode': 200 }
+
