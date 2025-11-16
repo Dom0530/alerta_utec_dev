@@ -1,12 +1,13 @@
 import json
 import boto3
 import uuid
+import os
 from datetime import datetime
 
 # Clientes de AWS
 dynamodb = boto3.resource('dynamodb')
-table = dynamodb.Table('Incidents')
-
+table_name = os.environ.get('TABLE_NAME')
+table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
     try:
@@ -79,4 +80,5 @@ def lambda_handler(event, context):
                 'message': 'Error al crear incidente',
                 'error': str(e)
             })
+
         }
